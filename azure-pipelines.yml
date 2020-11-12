@@ -31,6 +31,22 @@ stages:
         steps:
         -  bash: |
             echo DEV
+  
+  - stage: TEST
+    condition: or(contains('${{ parameters.Run_Stage }}', 'TEST'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    jobs:
+      - job: Testing
+        steps:
+        -  bash: |
+            echo TEST
+
+  - stage: STG
+    condition: or(contains('${{ parameters.Run_Stage }}', 'STG'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    jobs:
+      - job: Staging
+        steps:
+        -  bash: |
+            echo STG
 
   - stage: PROD
     condition: or(contains('${{ parameters.Run_Stage }}', 'PROD'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))
