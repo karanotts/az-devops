@@ -1,1 +1,41 @@
+parameters:
+  - name: Run_Stage
+    displayName: Stage to Run
+    type: string
+    default: ''
+    values:
+      - SBOX
+      - DEV
+      - TEST
+      - STG
+      - PROD
+      - NONPROD
+      - PRODUCTION
+      - ALL
 
+
+
+stages:
+  - stage: SBOX
+    condition: or(contains('${{ parameters.Run_Stage }}', 'SBOX'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    jobs:
+      - job: Sandbox
+        steps:
+        -  bash: |
+            echo SBOX
+
+  - stage: DEV
+    condition: or(contains('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    jobs:
+      - job: Development
+        steps:
+        -  bash: |
+            echo DEV
+
+  - stage: PROD
+    condition: or(contains('${{ parameters.Run_Stage }}', 'PROD'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    jobs:
+      - job: Production
+        steps:
+        -  bash: |
+            echo PROD
