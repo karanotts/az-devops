@@ -47,7 +47,7 @@ stages:
             echo TEST
 
   - stage: STG
-    condition: and(or(eq('${{ parameters.Run_Stage }}', 'STG'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL')))), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    condition: and(or(eq('${{ parameters.Run_Stage }}', 'STG'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL')), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     jobs:
       - job: Staging
         steps:
@@ -55,7 +55,7 @@ stages:
             echo STG
 
   - stage: PROD
-    condition: and(or(eq('${{ parameters.Run_Stage }}', 'PROD'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL')))), eq(variables['Build.SourceBranch'], 'refs/heads/master')
+    condition: and(or(eq('${{ parameters.Run_Stage }}', 'PROD'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL')), eq(variables['Build.SourceBranch'], 'refs/heads/master')
     jobs:
       - job: Production
         steps:
