@@ -1,8 +1,14 @@
+---
+trigger:
+  - master
+pr:
+  - none
+  
 parameters:
   - name: Run_Stage
     displayName: Stage to Run
     type: string
-    default: ''
+    default: ALL
     values:
       - SBOX
       - DEV
