@@ -17,7 +17,7 @@ parameters:
 
 stages:
   - stage: SBOX
-    condition: or(contains('${{ parameters.Run_Stage }}', 'SBOX'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    condition: or(eq('${{ parameters.Run_Stage }}', 'SBOX'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
     jobs:
       - job: Sandbox
         steps:
@@ -25,7 +25,7 @@ stages:
             echo SBOX
 
   - stage: DEV
-    condition: or(contains('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    condition: or(eq('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
     jobs:
       - job: Development
         steps:
@@ -33,7 +33,7 @@ stages:
             echo DEV
   
   - stage: TEST
-    condition: or(contains('${{ parameters.Run_Stage }}', 'TEST'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    condition: or(eq('${{ parameters.Run_Stage }}', 'TEST'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
     jobs:
       - job: Testing
         steps:
@@ -41,7 +41,7 @@ stages:
             echo TEST
 
   - stage: STG
-    condition: or(contains('${{ parameters.Run_Stage }}', 'STG'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    condition: or(eq('${{ parameters.Run_Stage }}', 'STG'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))
     jobs:
       - job: Staging
         steps:
@@ -49,7 +49,7 @@ stages:
             echo STG
 
   - stage: PROD
-    condition: or(contains('${{ parameters.Run_Stage }}', 'PROD'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    condition: or(eq('${{ parameters.Run_Stage }}', 'PROD'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))
     jobs:
       - job: Production
         steps:
