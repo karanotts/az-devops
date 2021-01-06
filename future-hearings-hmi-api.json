@@ -709,7 +709,6 @@
                     "in": "query",
                     "required": true,
                     "type": "string",
-                    "default": "360",
                     "enum": ["360"]
                 }, {
                     "name": "requestSessionType",
