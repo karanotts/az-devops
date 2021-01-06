@@ -711,7 +711,7 @@
                     "enum": ["360"]
                 }, {
                     "name": "requestSessionType",
-                    "in": "header",
+                    "in": "query",
                     "required": true,
                     "type": "string",
                     "default": "ADHOC",
