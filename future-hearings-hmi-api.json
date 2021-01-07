@@ -707,7 +707,6 @@
                 }, {
                     "name": "requestDuration",
                     "in": "query",
-                    "required": true,
                     "type": "string",
                     "enum": ["360"]
                 }, {
