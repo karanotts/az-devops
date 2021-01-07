@@ -713,6 +713,7 @@
                     "name": "requestSessionType",
                     "in": "query",
                     "type": "string",
+                    "default": "ADHOC",
                     "enum": ["ADHOC"]
                 }, {
                     "name": "Source-System",
