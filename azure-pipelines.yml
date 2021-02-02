@@ -49,6 +49,10 @@ stages:
         steps:
         -  bash: |
             exit 1
+        -  bash: |
+            echo HelloOnceMore
+           condition: succeededOrFailed()
+
       - job: Success3
         dependsOn: Error2
         condition: succeeded() # eq(dependencies.Error2.result, 'SucceededWithIssues')
