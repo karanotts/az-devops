@@ -31,6 +31,7 @@ stages:
             echo HelloWorld
       - job: Error
         dependsOn: Success1
+        continueOnError: true
         condition: eq(dependencies.Success1.result,'Succeeded') 
         steps:
         -  bash: |
