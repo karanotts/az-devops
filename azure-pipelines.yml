@@ -25,10 +25,22 @@ stages:
   - stage: SBOX
     condition: or(eq('${{ parameters.Run_Stage }}', 'SBOX'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
     jobs:
-      - job: Sandbox
+      - job: Success1
         steps:
         -  bash: |
-            echo SBOX
+            echo HelloWorld
+      - job: Error
+        dependsOn: Success1
+        condition: eq(dependencies.Success1.result,'Succeeded') 
+        steps:
+        -  bash: |
+            exit 1
+      - job: Success2
+        dependsOn: Error
+        condition: eq(dependencies.Error.result, 'SucceededOrFailed')
+        steps:
+        -  bash: |
+            echo HelloAgain
 
   - stage: DEV
     condition: or(eq('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
