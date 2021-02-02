@@ -44,14 +44,14 @@ stages:
             echo HelloAgain
       - job: Error2
         dependsOn: Success1
-        continueOnError: false
+        continueOnError: true
         condition: eq(dependencies.Success1.result,'Succeeded') 
         steps:
         -  bash: |
             exit 1
       - job: Success3
         dependsOn: Error2
-        condition: eq(dependencies.Error2.result, 'SucceededWithIssues')
+        condition: succeeded() # eq(dependencies.Error2.result, 'SucceededWithIssues')
         steps:
         -  bash: |
             echo Can'tSeeMe
