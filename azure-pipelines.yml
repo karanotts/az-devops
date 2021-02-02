@@ -60,7 +60,7 @@ stages:
             echo Hello!
 
   - stage: DEV
-    condition: or(succeeded(), eq('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    condition: and(succeeded(), or(eq('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL')))
     jobs:
       - job: Development
         steps:
@@ -68,7 +68,7 @@ stages:
             echo DEV
   
   - stage: TEST
-    condition: or(succeeded(), eq('${{ parameters.Run_Stage }}', 'TEST'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
+    condition: and(succeeded(), or(eq('${{ parameters.Run_Stage }}', 'TEST'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL')))
     jobs:
       - job: Testing
         steps:
