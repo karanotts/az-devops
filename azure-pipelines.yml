@@ -44,7 +44,6 @@ stages:
             echo HelloAgain
       - job: Error2
         dependsOn: Success1
-        continueOnError: true
         condition: eq(dependencies.Success1.result,'Succeeded') 
         steps:
         -  bash: |
@@ -58,7 +57,7 @@ stages:
         condition: succeeded() # eq(dependencies.Error2.result, 'SucceededWithIssues')
         steps:
         -  bash: |
-            echo Can'tSeeMe
+            echo CantSeeMe
 
   - stage: DEV
     condition: or(succeeded(), eq('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
