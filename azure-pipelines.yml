@@ -37,7 +37,7 @@ stages:
             exit 1
       - job: Success2
         dependsOn: Error
-        condition: eq(dependencies.Error.result, 'SucceededOrFailed')
+        condition: eq(dependencies.Error.result, 'SucceededWithIssues')
         steps:
         -  bash: |
             echo HelloAgain
