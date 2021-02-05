@@ -27,37 +27,14 @@ stages:
     jobs:
       - job: Sandbox
         steps:
-        -  bash: |
-            echo SBOX
-
-  - stage: DEV
-    condition: or(eq('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
-    jobs:
-      - job: Development
-        steps:
-        -  bash: |
-            echo DEV
-  
-  - stage: TEST
-    condition: or(eq('${{ parameters.Run_Stage }}', 'TEST'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL'))
-    jobs:
-      - job: Testing
-        steps:
-        -  bash: |
-            echo TEST
-
-  - stage: STG
-    condition: and(or(eq('${{ parameters.Run_Stage }}', 'STG'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    jobs:
-      - job: Staging
-        steps:
-        -  bash: |
-            echo STG
-
-  - stage: PROD
-    condition: and(or(eq('${{ parameters.Run_Stage }}', 'PROD'), contains('${{ parameters.Run_Stage }}', 'PRODUCTION'), contains('${{ parameters.Run_Stage }}', 'ALL'))), eq(variables['Build.SourceBranch'], 'refs/heads/master')
-    jobs:
-      - job: Production
-        steps:
-        -  bash: |
-            echo PROD
+        - task: AzurePowerShell@5
+          inputs:
+            azureSubscription: 'DTS-SHAREDSERVICES-SBOX'
+            ScriptType: 'InlineScript'
+            Inline: |
+              Import-Module -Name AzureRM -Force -Verbose
+                   
+              $blob = (Get-AzureRmStorageAccount -Name $(devopsStorageAccount) -ResourceGroupName $(devopsResourceGroup) | Get-AzureStorageBlob -Container "$(prefix)$(product)terraform" | Where-Object -Property Name -eq "$(prefix)$(product).tfstate")
+              
+              echo $blob
+            azurePowerShellVersion: 'LatestVersion'
