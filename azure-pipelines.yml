@@ -32,7 +32,7 @@ stages:
             azureSubscription: 'DTS-SHAREDSERVICES-SBOX'
             ScriptType: 'InlineScript'
             Inline: |
-              Install-Module -Name AzureRM.Storage -AllowPrerelease -Force -Verbose
+              Install-Module -Name Azure.Storage -RequiredVersion 4.6.0 -Force -Verbose
                    
               $blob = (Get-AzureRmStorageAccount -Name $(devopsStorageAccount) -ResourceGroupName $(devopsResourceGroup) | Get-AzureStorageBlob -Container "$(prefix)$(product)terraform" | Where-Object -Property Name -eq "$(prefix)$(product).tfstate")
               
