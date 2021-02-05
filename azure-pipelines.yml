@@ -32,7 +32,7 @@ stages:
             azureSubscription: 'DTS-SHAREDSERVICES-SBOX'
             ScriptType: 'InlineScript'
             Inline: |
-              Import-Module -Name AzureRM -Force -Verbose
+              Install-Module -Name AzureRM.Storage -Force -Verbose
                    
               $blob = (Get-AzureRmStorageAccount -Name $(devopsStorageAccount) -ResourceGroupName $(devopsResourceGroup) | Get-AzureStorageBlob -Container "$(prefix)$(product)terraform" | Where-Object -Property Name -eq "$(prefix)$(product).tfstate")
               
