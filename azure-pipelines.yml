@@ -62,10 +62,14 @@ stages:
   - stage: DEV
     condition: and(succeeded(), or(eq('${{ parameters.Run_Stage }}', 'DEV'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL')))
     jobs:
-      - job: Development
-        steps:
-        -  bash: |
-            echo DEV
+    - deployment: dev
+      environment: sbox
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            -  bash: |
+                echo DEV
   
   - stage: TEST
     condition: and(succeeded(), or(eq('${{ parameters.Run_Stage }}', 'TEST'), contains('${{ parameters.Run_Stage }}', 'NONPROD'), contains('${{ parameters.Run_Stage }}', 'ALL')))
